@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from "react";
 import "./CustomerList.css";
 import { useNavigate } from "react-router-dom";
+import Navbar from "../../Navbar/Navbar";
 const CustomerList = () => {
   const [customers, setCustomers] = useState([]);
 
   const navigate = useNavigate();
+  if(localStorage.getItem("user") === null) {
+    navigate("/login")
+  }
 
   useEffect(() => {
     try {      
@@ -28,12 +32,16 @@ const CustomerList = () => {
     }).then(res => res.json())
     .then(data => setCustomers(data))
   }
+  
   return (
     <>
-      <div className="container">
+      <Navbar />
+      <div className="container  ">
+        <div className=" d-flex justify-content-start mb-4">
         <button className="btn btn-success" onClick={() => navigate("form")}>
           new Customer
         </button>
+        </div>
         { !customers ? (
           <div class="alert alert-danger m-3" role="alert">
             Thers is no cutomers!

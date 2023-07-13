@@ -1,24 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import Navbar from "../../Navbar/Navbar";
 
 const CustomerForm = () => {
   const [newCustomer, setNewCustomer] = useState({});
 
   const navigate = useNavigate();
   const { customerName } = useParams();
-
-  console.log(customerName);
   //console.log(newCustomer)
-
   useEffect(() => {
+    if(localStorage.getItem("user") === null) {
+      navigate("/login")
+    }
     if (customerName) {
       console.log(customerName);
       fetch("http://localhost:4000/api/customer")
-        .then((res) => res.json())
-        .then((data) => {
-          let result = data.find((e) => e.name === customerName);
-          if (result) {
-            setNewCustomer(result);
+      .then((res) => res.json())
+      .then((data) => {
+        let result = data.find((e) => e.name === customerName);
+        if (result) {
+          setNewCustomer(result);
           }
         });
     }
@@ -48,6 +49,8 @@ const CustomerForm = () => {
   return (
     <>
       <div>
+        
+      <Navbar />
         <div className="container d-flex flex-column min-vh-100 justify-content-center">
           <div className="mb-3">
             <label htmlFor="inputName" className="form-label ms-start">
