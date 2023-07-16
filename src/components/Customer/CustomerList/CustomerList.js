@@ -6,15 +6,17 @@ const CustomerList = () => {
   const [customers, setCustomers] = useState([]);
 
   const navigate = useNavigate();
-  if(localStorage.getItem("user") === null) {
-    navigate("/login")
-  }
 
+  
   useEffect(() => {
+    if(localStorage.getItem("user") === null) {
+      navigate("/login")
+    }
     try {      
       fetch("http://localhost:4000/api/customer")
-        .then((res) => res.json())
+        .then((res) => res.json()).catch((e) => console.log(e))
         .then((data) => setCustomers(data));
+        
     } catch (error) {
       console.log("There was an error",error)
     }
@@ -48,29 +50,29 @@ const CustomerList = () => {
           </div>
         ) : (
           <div className="customerList-container">
-            <table border={1}>
+            <table className="table">
               <thead>
-                <tr>
+                <tr className="table-primary">
                   <th>Name</th>
-                  <th>website</th>
-                  <th>Turnover</th>
-                  <th>noofEmployee</th>
                   <th>CEO</th>
-                  <th>Established year</th>
+                  <th>Turnover</th>
+                  <th>Employee</th>
+                  <th>year</th>
+                  <th>Update</th>
+                  <th>delete</th>
                 </tr>
               </thead>
               <tbody>
-                {customers.map((customer, index) => {
+                {customers.map((customer) => {
                   return (
-                    <tr key={index}>
-                      <td>{customer._id}</td>
+                    <tr key={customer._id}>
                       <td>{customer.name}</td>
+                      <td>{customer.ceo}</td>
                       <td>{customer.turnover}</td>
                       <td>{customer.employees}</td>
-                      <td>{customer.ceo}</td>
                       <td>{customer.year}</td>
-                      <td><button onClick={() => handleUpdate(customer.name)}>Update</button></td>
-                      <td><button onClick={() => deleteData(customer.name)}>delete   </button></td>
+                      <td><button onClick={() => handleUpdate(customer.name)} className="btn btn-warning">Update</button></td>
+                      <td><button onClick={() => deleteData(customer.name)} className="btn btn-danger">delete</button></td>
                     </tr>
                   );
                 })}

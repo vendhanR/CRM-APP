@@ -28,8 +28,9 @@ const SignUp = () => {
             alt="crm logo"
           />
         </div>
+        
         <div className="right  d-flex  align-items-center justify-content-center">
-          <div className="form">
+          <div className="form signup-sorm">
             <h3 className="mb-3">Please register to get started</h3>
             <div className="mb-3">
               <label htmlFor="name" className="form-label">

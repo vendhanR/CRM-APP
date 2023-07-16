@@ -42,7 +42,7 @@ const Login = () => {
           {
             invalidUSer &&
                 <div class="alert alert-danger m-3" role="alert">
-                  Email or password incorrect
+                 Invalid Credentials
                 </div>
           }
           <div className="mb-3">
