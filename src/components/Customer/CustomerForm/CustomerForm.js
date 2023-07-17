@@ -21,7 +21,7 @@ const CustomerForm = () => {
         if (result) {
           setNewCustomer(result);
           }
-        });
+        });  
     }
   }, []);
 
@@ -126,6 +126,19 @@ const CustomerForm = () => {
                 setNewCustomer({...newCustomer, ceo: e.target.value });
               }}
             />
+          </div>
+          <div className="input-group mb-3">
+            <label className="input-group-text" htmlfor="Status">Status</label>
+            <select className="form-select" id="Status" onChange={
+              (e) => {
+                setNewCustomer({...newCustomer, status: e.target.value });
+              }
+            } >
+              <option selected>Choose...</option>
+              <option value="New">New</option>
+              <option value="Rejected">Rejected</option>
+              <option value="Accepted">Accepted</option>
+            </select>
           </div>
           <div className="mb-3">
             <label htmlFor="inputEstablished" className="form-label">

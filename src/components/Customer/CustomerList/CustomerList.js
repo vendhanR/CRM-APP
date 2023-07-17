@@ -15,7 +15,10 @@ const CustomerList = () => {
     try {      
       fetch("http://localhost:4000/api/customer")
         .then((res) => res.json()).catch((e) => console.log(e))
-        .then((data) => setCustomers(data));
+        .then((data) => {
+          console.log(data)
+          setCustomers(data)
+        });
         
     } catch (error) {
       console.log("There was an error",error)
@@ -35,6 +38,15 @@ const CustomerList = () => {
     .then(data => setCustomers(data))
   }
   
+  const getBackroundColor = ( status) => {
+      if(status === "New" ) {
+        return "bg-primary text-white"
+      } else if(status === "Rejected") {
+         return "bg-danger text-white"
+      } else {
+        return "bg-success text-white"
+      }
+  }
   return (
     <>
       <Navbar />
@@ -58,6 +70,7 @@ const CustomerList = () => {
                   <th>Turnover</th>
                   <th>Employee</th>
                   <th>year</th>
+                  <th>status</th>
                   <th>Update</th>
                   <th>delete</th>
                 </tr>
@@ -69,6 +82,7 @@ const CustomerList = () => {
                       <td>{customer.name}</td>
                       <td>{customer.ceo}</td>
                       <td>{customer.turnover}</td>
+                      <td className={getBackroundColor(customer.status)}>{customer.status}</td>
                       <td>{customer.employees}</td>
                       <td>{customer.year}</td>
                       <td><button onClick={() => handleUpdate(customer.name)} className="btn btn-warning">Update</button></td>
