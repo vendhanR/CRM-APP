@@ -1,4 +1,5 @@
-.customerList-container{
-    display: flex;
-    justify-content: center;
+.search-input{
+    border: 1px solid #E9ECEE;
+    padding: 0.2rem .8rem;
+    outline: none;
 }
