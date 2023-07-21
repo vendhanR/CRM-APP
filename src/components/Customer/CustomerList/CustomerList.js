@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 import "./CustomerList.css";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../Navbar/Navbar";
-import "./CustomerList.css";
 import CustomerDashbord from "../CustomerDashbord/CustomerDashbord";
 
 const CustomerList = () => {
   const [customers, setCustomers] = useState([]);
   const [filteredCustomers, setFilteredCustomers] = useState([]);
   const [count, setCounts] = useState({});
+  const [pages, setPages] = useState([]);
 
   const navigate = useNavigate();
 
@@ -16,34 +16,43 @@ const CustomerList = () => {
     if (localStorage.getItem("user") === null) {
       navigate("/login");
     }
+    pageLoad(1)
+  }, []);
+
+  function pageLoad(pageNo) {
+    console.log(pageNo)
     try {
-      fetch("http://localhost:4000/api/customer")
+      fetch(`http://localhost:4000/api/customer/page/${pageNo}`)
         .then((res) => res.json())
         .then((data) => {
-          setCustomers(data);
-          setFilteredCustomers(data)
+          setCustomers(data.records);
+          setFilteredCustomers(data.records);
+          console.log(data)
+          let newCount = data.records.filter((c) => c.status === "New").length;
+          let acceptedCount = data.records.filter(
+            (c) => c.status === "Accepted"
+          ).length;
+          let rejectedCount = data.records.filter(
+            (c) => c.status === "Rejected"
+          ).length;
 
-          let newCount = customers.filter(c => c.status === "New").length
-          let acceptedCount = customers.filter(c => c.status === "Accepted").length
-          let rejectedCount = customers.filter(c => c.status === "Rejected").length
+          const countObj = {
+            newCount: newCount,
+            accepted: acceptedCount,
+            rejected: rejectedCount,
+            all: data.records.length,
+          };
+
+          setCounts(countObj);
+
+          let totalPages = Math.floor(data.totalCount / 100);
+          let arrayOfObject = new Array(totalPages).fill(0);
+          setPages(arrayOfObject);
         
-          const countObj = { 
-            "newCount" : newCount,
-            
-            "accepted" : acceptedCount,
-            "rejected" : rejectedCount,
-            "all" : customers.length
-          }
-
-          setCounts(countObj)
         });
     } catch (error) {
       console.log("There was an error", error);
     }
-  }, [])
-
-  function handleUpdate(customer) {
-    navigate("/form/" + customer);
   }
 
   function deleteData(dataleItem) {
@@ -51,7 +60,7 @@ const CustomerList = () => {
       method: "DELETE",
     })
       .then((res) => res.json())
-      .then((data) => setCustomers(data));
+      .then((data) => setFilteredCustomers(data));
   }
 
   const getBackroundColor = (status) => {
@@ -63,15 +72,15 @@ const CustomerList = () => {
       return "bg-success text-white";
     }
   };
- 
-  function handleSearch(key){
-    console.log(key)
-    
-    if(!key || key.length==0){
+
+  function handleSearch(key) {
+    if (!key || key.length === 0) {
       setFilteredCustomers(customers);
-    }else{
-      const result = customers.filter(c => c.name.includes(key.toUpperCase())) 
-      console.log(result)
+    } else {
+      const result = customers.filter((c) =>
+        c.name.includes(key.toUpperCase())
+      );
+      console.log(result);
       setFilteredCustomers([...result]);
       console.log(filteredCustomers);
     }
@@ -81,7 +90,7 @@ const CustomerList = () => {
     <>
       <Navbar />
       <div className="container  ">
-        <CustomerDashbord count={count}/>
+        <CustomerDashbord count={count} />
         <div className=" d-flex justify-content-start mb-4">
           <div className=" d-flex justify-content-between w-100">
             <div>
@@ -100,7 +109,7 @@ const CustomerList = () => {
                   placeholder="Search..."
                   onInput={(e) => handleSearch(e.target.value)}
                 />
-                <span className="input-group-text" onClick={handleSearch}>
+                <span className="input-group-text" onClick={() => handleSearch()}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="16"
@@ -116,13 +125,13 @@ const CustomerList = () => {
             </div>
           </div>
         </div>
-        {!filteredCustomers ||  filteredCustomers.length === 0 ? (
+        {!filteredCustomers || filteredCustomers.length === 0 ? (
           <div className="alert alert-danger m-3" role="alert">
             Thers is no cutomers!
           </div>
         ) : (
           <div className="customerList-container">
-            <table className="table">
+            <table className="table table-hover" id="customerTable">
               <thead>
                 <tr className="table-primary">
                   <th>Name</th>
@@ -149,7 +158,7 @@ const CustomerList = () => {
                       <td>{customer.year}</td>
                       <td>
                         <button
-                          onClick={() => handleUpdate(customer.name)}
+                          onClick={() => navigate("/form/" + customer.name)}
                           className="btn btn-warning"
                         >
                           Update
@@ -168,6 +177,34 @@ const CustomerList = () => {
                 })}
               </tbody>
             </table>
+            <div className="d-flex justify-content-center">
+            <nav aria-label="Page navigation example">
+              <ul className="pagination">
+                <li className="page-item">
+                  <button className="page-link"onClick={() => pageLoad(1)} aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                  </button>
+                </li>
+
+                {pages.map((page, index) => {
+                  return (
+                    <>
+                    <li className="page-item" key={index}>
+                      <button className="page-link" onClick={() => pageLoad(index+1)}>
+                        {index+1}
+                      </button>
+                    </li>
+                    </>
+                  );
+                })}
+                <li className="page-item">
+                  <button className="page-link"onClick={() => pageLoad(+1)} aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                  </button>
+                </li>
+              </ul>
+                </nav>
+            </div>
           </div>
         )}
       </div>

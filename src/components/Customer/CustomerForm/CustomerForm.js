@@ -69,7 +69,7 @@ const CustomerForm = () => {
               }}
             />
           </div>
-          <div className="mb-3">
+          {/* <div className="mb-3">
             <label htmlFor="inputWebsite" className="form-label">
               website
             </label>
@@ -83,7 +83,7 @@ const CustomerForm = () => {
                 setNewCustomer({...newCustomer, website: e.target.value });
               }}
             />
-          </div>
+          </div> */}
           <div className="mb-3">
             <label htmlFor="InputTurnover" className="form-label ms-start">
               Turnover
