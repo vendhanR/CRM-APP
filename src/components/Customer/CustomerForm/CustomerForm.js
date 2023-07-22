@@ -7,11 +7,8 @@ const CustomerForm = () => {
 
   const navigate = useNavigate();
   const { customerName } = useParams();
-  
+
   useEffect(() => {
-    if (localStorage.getItem("user") === null) {
-      navigate("/login");
-    }
     if (customerName) {
       console.log(customerName);
       fetch("http://localhost:4000/api/customer/" + customerName)

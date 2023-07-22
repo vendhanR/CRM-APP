@@ -16,8 +16,8 @@ const TicketList = () => {
     <>
       <Navbar />
       <div className="container">
-        <button onClick={() => navigate("/ticketform")}>
-            ticketform
+        <button className="btn btn-success" onClick={() => navigate("/ticketform")}>
+            New Ticket
         </button>
         <table className="table">
           <thead>

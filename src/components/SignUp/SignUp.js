@@ -14,7 +14,7 @@ const SignUp = () => {
         }
     }).then((res) =>{
         console.log(res)
-        navigate('/login')
+        navigate('/signin')
     })
     .catch(err => console.log(err))
   }

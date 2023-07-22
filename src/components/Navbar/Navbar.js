@@ -38,7 +38,7 @@ const Navbar = () => {
               <Link
                 className="nav-link active"
                 onClick={() => localStorage.removeItem("user")}
-                to={"/login"}
+                to={"/signin"}
               >
                 <button className="btn  btn-primary">Logout</button>
                 

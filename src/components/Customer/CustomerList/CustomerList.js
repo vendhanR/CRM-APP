@@ -13,9 +13,6 @@ const CustomerList = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (localStorage.getItem("user") === null) {
-      navigate("/login");
-    }
     pageLoad(1)
   }, []);
 
@@ -96,7 +93,7 @@ const CustomerList = () => {
             <div>
               <button
                 className="btn btn-success"
-                onClick={() => navigate("form")}
+                onClick={() => navigate("customerform")}
               >
                 new Customer
               </button>
