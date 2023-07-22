@@ -27,8 +27,8 @@ const Navbar = () => {
             </Link>
           </li>
           <li className="nav-item">
-            <Link className="nav-link active" to={"/form"}>
-              form
+            <Link className="nav-link active" to={"/tickets"}>
+              ticket
             </Link>
           </li>
         </ul>

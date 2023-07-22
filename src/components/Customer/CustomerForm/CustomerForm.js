@@ -7,38 +7,25 @@ const CustomerForm = () => {
 
   const navigate = useNavigate();
   const { customerName } = useParams();
-  //console.log(newCustomer)
+  
   useEffect(() => {
-    if(localStorage.getItem("user") === null) {
-      navigate("/login")
+    if (localStorage.getItem("user") === null) {
+      navigate("/login");
     }
     if (customerName) {
       console.log(customerName);
-      fetch("http://localhost:4000/api/customer")
-      .then((res) => res.json())
-      .then((data) => {
-        let result = data.find((e) => e.name === customerName);
-        if (result) {
-          setNewCustomer(result);
-          }
-        });  
+      fetch("http://localhost:4000/api/customer/" + customerName)
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          setNewCustomer(data);
+        });
     }
   }, []);
 
-  function createNewCustomerClick() {
-    console.log(newCustomer)
+  function handleFormSubmit() {
     fetch("http://localhost:4000/api/customer", {
-      method: "POST",
-      body: JSON.stringify(newCustomer),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }).then(() => navigate("/"));
-  }
-
-  function updateNewCustomerClick() {
-    fetch("http://localhost:4000/api/customer", {
-      method: "PUT",
+      method: customerName ? "PUT" : "POST",
       body: JSON.stringify(newCustomer),
       headers: {
         "Content-Type": "application/json",
@@ -49,8 +36,7 @@ const CustomerForm = () => {
   return (
     <>
       <div>
-        
-      <Navbar />
+        <Navbar />
         <div className="container d-flex flex-column min-vh-100 justify-content-center">
           <div className="mb-3">
             <label htmlFor="inputName" className="form-label ms-start">
@@ -61,11 +47,10 @@ const CustomerForm = () => {
               value={newCustomer.name}
               type="text"
               className="form-control"
-
               id="inputName"
               onInput={(e) => {
                 // newCustomer.name = e.target.value;
-                setNewCustomer({...newCustomer, name: e.target.value });
+                setNewCustomer({ ...newCustomer, name: e.target.value });
               }}
             />
           </div>
@@ -94,8 +79,7 @@ const CustomerForm = () => {
               className="form-control"
               id="InputTurnover"
               onChange={(e) => {
-                //newCustomer.turnover = e.target.value;
-                setNewCustomer({...newCustomer, turnover: e.target.value });
+                setNewCustomer({ ...newCustomer, turnover: e.target.value });
               }}
             />
           </div>
@@ -109,7 +93,7 @@ const CustomerForm = () => {
               className="form-control"
               id="InputEmployees"
               onChange={(e) => {
-                setNewCustomer({...newCustomer, employees: e.target.value });
+                setNewCustomer({ ...newCustomer, employees: e.target.value });
               }}
             />
           </div>
@@ -123,17 +107,22 @@ const CustomerForm = () => {
               className="form-control"
               id="inputCEO"
               onChange={(e) => {
-                setNewCustomer({...newCustomer, ceo: e.target.value });
+                setNewCustomer({ ...newCustomer, ceo: e.target.value });
               }}
             />
           </div>
           <div className="input-group mb-3">
-            <label className="input-group-text" htmlfor="Status">Status</label>
-            <select className="form-select" id="Status" onChange={
-              (e) => {
-                setNewCustomer({...newCustomer, status: e.target.value });
-              }
-            } >
+            <label className="input-group-text" htmlfor="Status">
+              Status
+            </label>
+            <select
+              className="form-select"
+              id="Status"
+              onChange={(e) => {
+                setNewCustomer({ ...newCustomer, status: e.target.value });
+              }}
+              value={newCustomer.status}
+            >
               <option selected>Choose...</option>
               <option value="New">New</option>
               <option value="Rejected">Rejected</option>
@@ -150,15 +139,13 @@ const CustomerForm = () => {
               className="form-control"
               id="inputEstablished"
               onChange={(e) => {
-                setNewCustomer({ ...newCustomer,year: e.target.value });
+                setNewCustomer({ ...newCustomer, year: e.target.value });
               }}
             />
           </div>
-          {customerName ? (
-            <button onClick={updateNewCustomerClick}>update Customer</button>
-          ) : (
-            <button onClick={createNewCustomerClick}>creat new Customer</button>
-          )}
+          <button onClick={handleFormSubmit}>
+            {customerName ? "update Customer" : "creat new Customer"}
+          </button>
         </div>
       </div>
     </>
