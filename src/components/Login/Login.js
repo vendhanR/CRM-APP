@@ -19,7 +19,6 @@ const Login = () => {
         if(res.status === 400) {
             setInavlidUSer(true)
         } else if (res.status === 200) {
-          console.log(loginUser.email)
            localStorage.setItem("user", "true");
             navigate("/");
         }
@@ -32,6 +31,7 @@ const Login = () => {
       <div className="d-flex container">
         <div className="left d-flex  align-items-center justify-content-center">
           <img
+          className="crm-img"
             src="https://img.freepik.com/premium-vector/crm-icons-customer-relationship-management-vector-infographics-template_116137-3703.jpg"
             alt="crm logo"
           />
@@ -72,7 +72,7 @@ const Login = () => {
             />
           </div>
           <button className="btn btn-success float-end" onClick={handleLogin}>
-            register
+            login
           </button>
           </div>
         </div>

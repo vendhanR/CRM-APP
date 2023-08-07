@@ -1,3 +1,45 @@
+nav{
+    background-color: #002956;
+}
 .nav-link{
     color:#fff;
+}
+
+.nav-link:hover{
+    color: #04E7FB;
+}
+
+ul{
+    list-style: none;
+}
+.sidebar{
+    display: none;
+}
+@media screen and (max-width:500px) {
+    .nav-list{
+        display: none !important;
+    }
+
+    .sidebar{
+        display:  block;
+    }
+
+    .p-button.p-button-icon-only{
+        width: 2rem !important ;
+        padding: 0.30rem 0 !important;
+    }
+    .nav-link{
+        color:#000;
+        transition: all 500ms;
+    }
+    
+
+    .sidebar-item{
+        margin-bottom: 2rem;
+    }
+
+    .nav-link:hover{
+        color: #000;
+       transform: scale(1.05);
+    }
 }

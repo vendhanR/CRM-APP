@@ -24,6 +24,7 @@ const SignUp = () => {
       <div className="d-flex container">
         <div className="left d-flex  align-items-center justify-content-center">
           <img
+          className="crm-img"
             src="https://img.freepik.com/premium-vector/crm-icons-customer-relationship-management-vector-infographics-template_116137-3703.jpg"
             alt="crm logo"
           />

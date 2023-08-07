@@ -7,7 +7,7 @@ const SecuredRoutes = (props) => {
     const isUserLogged = localStorage.getItem("user");
     if(!isUserLogged || isUserLogged!="true"){
         console.log("Not logged in");
-        window.location.href="/signin";
+        window.location.href="/signup";
     }else{
         setLogin(true);
     }

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../Navbar/Navbar";
 import { useNavigate } from "react-router-dom";
+import './UserList.css'
 
 const User = () => {
 
@@ -38,10 +39,10 @@ const User = () => {
     <>
       <Navbar />
       <div className="container">
-        <button className="btn btn-info" onClick={() => navigate("/userform")}>
+        <button className="btn-add-user mb-3" onClick={() => navigate("/userform")}>
           Add User
         </button>
-        <table className="table">
+        <table>
           <thead>
             <tr>
               <th scope="col">name</th>
@@ -54,15 +55,15 @@ const User = () => {
             {users.map((user,index) => {
               return (
                 <tr key={index}>
-                  <th scope="row">{user.name}</th>
+                  <td scope="row">{user.name}</td>
                   <td>{user.username}</td>
                   <td>{user.email}</td>
                   <td>
                     {!user.isActive && (
-                      <button className="btn  btn-success" onClick={() => activateUser(user.username)}>active</button>
+                      <button className="btn-active" onClick={() => activateUser(user.username)}>active</button>
                     )}
                     {user.isActive && (
-                      <button className="btn  btn-danger px-3"  onClick={() => deActivateUser(user.username)}>de - active</button>
+                      <button className="btn-deActive"  onClick={() => deActivateUser(user.username)}>de - active</button>
                     )}
                   </td>
                 </tr>

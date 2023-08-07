@@ -1,0 +1,32 @@
+.ticket-dashboard{
+    width: 12rem;
+    height: 5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 0.2rem 0.6rem;
+    color: #fff;
+    border-radius: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.tickets{
+    background: linear-gradient(to right , #606c88,#3f4c6b);
+}
+
+.new{
+    background:linear-gradient(to right , #4894f6,#2f7ef5);
+}
+
+.assigned{
+    background:linear-gradient(to right ,rgb(246, 186, 73), rgb(255, 165, 0));
+
+}
+
+.resolved{
+    background:linear-gradient(to right , #00b09b,#1E9600);
+}
+
+.in-progress{
+    background:linear-gradient(to right ,#f57662, #eb3349);
+}

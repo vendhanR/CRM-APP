@@ -1,0 +1,31 @@
+.btn-add-user{
+    border: none;
+    font-size: 0.8rem;
+    font-weight: bold;
+    padding: 0.3rem 0.5rem;
+    border-radius: 0.4rem;
+    transition: all 300ms;
+    color: #fff;
+    background-color: #2a66a7;
+}
+
+
+.btn-active,.btn-deActive{
+    border: none;
+    background-color: #002956;
+    color: #fff;
+    border-radius: 0.3rem;
+}
+
+.btn-add-user:hover{
+    background-color: #2a66a7;
+    
+}
+
+.btn-active:hover{
+    background-color:green;
+}
+
+.btn-deActive:hover{
+    background-color: red;
+}

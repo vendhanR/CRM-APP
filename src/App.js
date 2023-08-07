@@ -76,6 +76,14 @@ function App() {
               </SecuredRoutes>
             }
           />
+          <Route
+            path="ticketform/:tickDesc"
+            element={
+              <SecuredRoutes>
+                <TicketForm />
+              </SecuredRoutes>
+            }
+          />
         </Routes>
       </Router>
     </div>
